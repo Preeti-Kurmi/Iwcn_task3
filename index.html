@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Request</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <input type="number" id="phonenumber">
+  <button id="btn" onclick="send()">Send</button>
+  <div id="result"></div>
+
+  <script>
+    async function send() {
+      const phonenumber = document.getElementById('phonenumber').value;
+      const apiUrl = 'https://chimpu.xyz/api/post.php';
+
+      try {
+        const response = await axios.post(apiUrl, phonenumber );
+        console.log('Response Data:', response.config.data);
+
+        const resultDiv = document.getElementById('result');
+        if (response.data && response.data.msg) {
+          resultDiv.innerText = response.config.data;
+        } else {
+          resultDiv.innerText = 'Unexpected response format';
+        }
+      } catch (error) {
+        console.error('Request error:', error.message);
+      }
+    }
+  </script>
+</body>
+</html>
